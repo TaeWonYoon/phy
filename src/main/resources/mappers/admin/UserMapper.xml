@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.company.mapper.admin.UserDAO">
+
+	<insert id="userAdd" useGeneratedKeys="true" keyProperty="seq"> 
+		INSERT INTO tb_user
+			(
+				name, id, pwd, phone, adderss,
+			 	department, status, position, reg_date
+			) 
+		VALUES
+			(
+				#{name}, #{id}, #{pwd}, #{phone}, #{adderss},
+			 	#{department}, #{status}, #{position}, now()
+			)
+	</insert>
+	
+	<select id="userList" resultType="com.dev.company.vo.UserVO"  parameterType="map">
+		/*com.dev.company.mapper.admin.UserDAO.userList*/
+		SELECT * FROM 
+			tb_user
+		WHERE
+			status > 0
+		LIMIT 
+			#{pageIndex}, #{pageSize}
+	</select>
+	
+	<select id="userListCnt" resultType="com.dev.company.vo.UserVO"  parameterType="map">
+		/*com.dev.company.mapper.admin.UserDAO.userListCnt*/
+		SELECT count(*) FROM 
+			tb_user
+		WHERE
+			status > 0
+	</select>
+	
+	<select id="idChk" resultType="int" >
+		/*com.dev.company.mapper.admin.UserDAO.userList*/
+		SELECT count(*) FROM 
+			tb_user
+		WHERE
+			id = #{id}
+	</select>
+	
+	
+	<select id="login" resultType="com.dev.company.vo.UserVO">
+		/*com.dev.company.mapper.admin.UserDAO.login*/
+		SELECT * FROM 
+			tb_user
+		WHERE
+			id = #{id}
+		LIMIT
+			0,1
+	</select>
+	
+	<insert id="userLog">
+	/*com.dev.company.mapper.admin.UserDAO.userLog*/
+		INSERT INTO tb_login_log
+		SET
+			seq = #{seq}, name = #{name},
+			ip = #{ip}, date = now()
+	</insert>
+</mapper>
