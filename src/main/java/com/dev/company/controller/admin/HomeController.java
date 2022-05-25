@@ -34,7 +34,7 @@ public class HomeController {
 		System.out.println("IP = " + Ip.IpAddress(req));
 		
 		
-		return "/admin/index";
+		return "/admin/user/login";
 	}
 	
 	

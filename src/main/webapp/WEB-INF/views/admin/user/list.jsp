@@ -17,20 +17,35 @@
                                 <td>
                                     <div>
                                         <select name="searchType" id="searchType">
-                                            <option value="userName">이름</option>
-                                            <option value="userId">아이디</option>
-                                            <option value="userEmail">이메일</option>
-                                            <option value="userPhone">휴대폰</option>
-                                            <option value="niep">휴대폰,이메일,아이디,이름</option>
+                                        	<option value="">전체</option>
+                                            <option value="name">이름</option>
+                                            <option value="id">아이디</option>
+                                            <option value="phone">휴대폰</option>
+                                        </select>
+                                        <select name="department" id="department">
+                                        	<option value="">부서</option>
+                                            <option value="1">인턴</option>
+                                            <option value="2">선임</option>
+                                            <option value="3">책임</option>
+                                            <option value="9">대표</option>
+                                        </select>
+                                        <select name="position" id="position">
+                                        	<option value="">직급</option>
+                                            <option value="1">개발</option>
+                                            <option value="2">운영</option>
+                                            <option value="3">인사</option>
+                                            <option value="9">대표</option>
                                         </select>
                                         <input type="text" name="keyword" id="searchText" value="">
+                                        <button type="button" id="btnSearch">검색</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <th>기간</th>
                                 <td>
-                                    <input type="date" name="startDate" value="">
+                                    	시작 날짜 <input type="date" name="startDate" value="">
+                                    	종료 날짜 <input type="date" name="finishDate" value="">
                                 </td>
                             </tr>
                         </tbody>
@@ -55,23 +70,14 @@
                             <th>등록일</th>
                         </tr>
                     </thead>
-                    <tbody class="tb_css">
-                        <tr>
-                            <td colspan="6">등록된 회원이 없습니다.</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
+                    <tbody class="tb_css" id="tbody">
                     </tbody>
                 </table>
+                <div id="paging">
+                </div>
 	    </div>
 	</article>
 </section>
-
+<script src="${resources}/pageJs/admin/user/list.js"></script>
 </body>
 </html>

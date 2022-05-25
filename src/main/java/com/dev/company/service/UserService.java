@@ -13,7 +13,10 @@ import com.dev.company.vo.UserVO;
 public interface UserService {
 
 	// 유저 리스트
-	public List<Map<String, Object>> userList();
+	public List<UserVO> userList(Map<String, Object> map);
+	
+	//유저 리스트 카운트
+	public int userListCnt(Map<String, Object> map);
 	
 	//중복확인
 	public int idChk(String id);

@@ -117,7 +117,7 @@ $("#idChk").click(function() {
 	}
 	
 	var formData = new FormData($('#formData')[0]);
-	callAjax(formData,"./idChk",idCallback,true);
+	callAjax(formData,"./idChk",idCallback,true,"f");
 })
 
 //폰 정규식

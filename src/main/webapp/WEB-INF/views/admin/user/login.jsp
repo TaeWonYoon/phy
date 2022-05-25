@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -144,7 +144,7 @@ h2 {
             </div>
 	            <div class="login_id">
 	                <h4>id</h4>
-	                <input type="text" name="id" id="" placeholder="id">
+	                <input type="text" name="id" id="" placeholder="id" value="">
 	            </div>
 	            <div class="login_pw">
 	                <h4>Password</h4>
@@ -174,7 +174,7 @@ h2 {
 		}
 		
 		var formData = new FormData($('#formData')[0]);
-		callAjax(formData,"./login.do",callback,true);
+		callAjax(formData,"/admin/user/login.do",callback,true,"f");
 	})
  </script>
 </body>

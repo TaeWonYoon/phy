@@ -20,8 +20,14 @@ public class UserServiceImpl implements UserService{
     private UserDAO dao;
 	
 	@Override
-	public List<Map<String, Object>> userList() {
-		return dao.userList();
+	public List<UserVO> userList(Map<String, Object> map) {
+		return dao.userList(map);
+	}
+	
+	@Override
+	public int userListCnt(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.userListCnt(map);
 	}
 
 	@Override

@@ -19,15 +19,34 @@
 	
 	<select id="userList" resultType="com.dev.company.vo.UserVO"  parameterType="map">
 		/*com.dev.company.mapper.admin.UserDAO.userList*/
-		SELECT * FROM 
+		SELECT 
+			name, id, phone, address, 
+			department, position, reg_date 
+		FROM 
 			tb_user
 		WHERE
 			status > 0
+			<if test="(searchType != null) and (!searchType.equals(''))">
+				AND ${searchType} LIKE CONCAT( #{keyword}, '%')
+			</if>
+			<if test="(department != null) and (!department.equals(''))">
+				AND department = #{department}
+			</if>
+			<if test="(position != null) and (!position.equals(''))">
+				AND position = #{position}
+			</if>
+			 <if test="startDate != '' and startDate != null ">
+	            AND DATE(reg_date) >= #{startDate}
+	        </if>
+	        <if test="finishDate != '' and finishDate != null ">
+	            AND DATE(reg_date) <![CDATA[<=]]> #{finishDate}
+	        </if>
+	        
 		LIMIT 
 			#{pageIndex}, #{pageSize}
 	</select>
 	
-	<select id="userListCnt" resultType="com.dev.company.vo.UserVO"  parameterType="map">
+	<select id="userListCnt" resultType="int"  parameterType="map">
 		/*com.dev.company.mapper.admin.UserDAO.userListCnt*/
 		SELECT count(*) FROM 
 			tb_user

@@ -3,6 +3,7 @@ package com.dev.company.controller.admin;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -52,9 +53,38 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/list")
-	public String list() {
+	public String list(Model model) {
+		
 		return "/admin/user/list";
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/list.do")
+	public Map<String,Object> listDo( @RequestParam Map<String,Object> paramMap) {
+		
+		logger.info("   - paramMap : " + paramMap);
+		
+		int currentPage = Integer.parseInt((paramMap.get("currentPage").toString()));	// 현재 페이지 번호
+		int pageSize = Integer.parseInt((String)(paramMap.get("pageSize").toString()));	// 페이지 사이즈
+		int pageIndex = (currentPage-1)*pageSize;	// 페이지 시작 row 번호
+		
+		paramMap.put("pageIndex", pageIndex);	//리미트 조건: pageIndex부터 시작해서
+		paramMap.put("pageSize", pageSize);		//pageSize값 만큼 조회할거다
+		
+		List<UserVO> list = service.userList(paramMap);
+		int listCnt = service.userListCnt(paramMap);
+		
+		Map<String,Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", list);	
+		resultMap.put("listCnt", listCnt);	
+		resultMap.put("pageSize", pageSize);	//10
+		resultMap.put("currentPage",currentPage);	//1
+		
+		
+		return resultMap;
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "/idChk", method = RequestMethod.POST)

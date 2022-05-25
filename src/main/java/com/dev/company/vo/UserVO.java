@@ -1,5 +1,7 @@
 package com.dev.company.vo;
 
+import java.sql.Timestamp;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -14,9 +16,10 @@ public class UserVO {
 	private String id;
 	private String pwd;
 	private String phone;
-	private String adderss;
+	private String address;
 	private int department;
 	private int position;
 	private int status;
+	private Timestamp regDate;
 	
 }
