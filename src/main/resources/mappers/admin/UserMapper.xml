@@ -20,14 +20,24 @@
 	<select id="userList" resultType="com.dev.company.vo.UserVO"  parameterType="map">
 		/*com.dev.company.mapper.admin.UserDAO.userList*/
 		SELECT 
-			name, id, phone, address, 
+			seq, name, id, phone, address, 
 			department, position, reg_date 
 		FROM 
 			tb_user
 		WHERE
 			status > 0
-			<if test="(searchType != null) and (!searchType.equals(''))">
-				AND ${searchType} LIKE CONCAT( #{keyword}, '%')
+			<if test="searchType.equals('all')">
+				AND
+				(	
+						name LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					 	id LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					 	phone LIKE CONCAT('%', #{keyword}, '%')
+			 	)
+			</if>
+			<if test="(!searchType.equals('all'))">
+				AND ${searchType} LIKE CONCAT('%', #{keyword}, '%')
 			</if>
 			<if test="(department != null) and (!department.equals(''))">
 				AND department = #{department}
@@ -52,6 +62,31 @@
 			tb_user
 		WHERE
 			status > 0
+			<if test="searchType.equals('all')">
+				AND
+				(	
+						name LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					 	id LIKE CONCAT('%', #{keyword}, '%')
+					OR
+					 	phone LIKE CONCAT('%', #{keyword}, '%')
+			 	)
+			</if>
+			<if test="(!searchType.equals('all'))">
+				AND ${searchType} LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="(department != null) and (!department.equals(''))">
+				AND department = #{department}
+			</if>
+			<if test="(position != null) and (!position.equals(''))">
+				AND position = #{position}
+			</if>
+			 <if test="startDate != '' and startDate != null ">
+	            AND DATE(reg_date) >= #{startDate}
+	        </if>
+	        <if test="finishDate != '' and finishDate != null ">
+	            AND DATE(reg_date) <![CDATA[<=]]> #{finishDate}
+	        </if>
 	</select>
 	
 	<select id="idChk" resultType="int" >
@@ -80,4 +115,14 @@
 			seq = #{seq}, name = #{name},
 			ip = #{ip}, date = now()
 	</insert>
+	
+	<select id="userInfo" resultType="com.dev.company.vo.UserVO">
+		/*com.dev.company.mapper.admin.UserDAO.userInfo*/
+		SELECT * FROM 
+			tb_user
+		WHERE
+			seq = #{seq}
+		LIMIT
+			0,1
+	</select>
 </mapper>

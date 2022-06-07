@@ -34,4 +34,7 @@ public interface UserDAO {
 	
 	//로그인
 	public UserVO login(String id);
+	
+	//유저 상세
+	public UserVO userInfo(String seq);
 }

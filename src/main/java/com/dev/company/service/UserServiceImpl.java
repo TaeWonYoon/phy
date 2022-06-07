@@ -50,4 +50,10 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return dao.login(id);
 	}
+	
+	@Override
+	public UserVO userInfo(String seq) {
+		// TODO Auto-generated method stub
+		return dao.userInfo(seq);
+	}
 }

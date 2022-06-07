@@ -180,4 +180,11 @@ public class UserController {
 		logger.info("   - resultMap : " + resultMap);
 		return resultMap;
 	}
+	
+	@RequestMapping(value = "/userInfo")
+	public String userInfo(@Param("seq") String seq) {
+		
+		service.userInfo(seq);
+		return "/admin/user/userInfo";
+	}
 }

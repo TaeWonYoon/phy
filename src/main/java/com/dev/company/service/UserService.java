@@ -29,4 +29,8 @@ public interface UserService {
 	
 	//로그인 로그
 	public void userLog(IPVO ivo);
+	
+	//유저 상세
+	public UserVO userInfo(String seq);
+	
 }

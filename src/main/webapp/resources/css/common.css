@@ -162,3 +162,19 @@ table {
 .page_search {
     margin-bottom: 3%;
 }
+.paging {
+	margin-top: 15px;
+	text-align: center;
+}
+.paging a{
+	margin-right: 6px;
+	padding: 5px;
+	border: 1px solid #ccffff;
+	text-decoration: none;
+	background: #ffffff;
+	color: #000000;
+	font-weight: 700;
+}
+.on {
+	background: #b3ffff !important;
+}

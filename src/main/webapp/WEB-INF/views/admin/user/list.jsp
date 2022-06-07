@@ -17,26 +17,27 @@
                                 <td>
                                     <div>
                                         <select name="searchType" id="searchType">
-                                        	<option value="">전체</option>
+                                        	<option value="all">전체</option>
                                             <option value="name">이름</option>
                                             <option value="id">아이디</option>
                                             <option value="phone">휴대폰</option>
                                         </select>
                                         <select name="department" id="department">
                                         	<option value="">부서</option>
-                                            <option value="1">인턴</option>
-                                            <option value="2">선임</option>
-                                            <option value="3">책임</option>
-                                            <option value="9">대표</option>
-                                        </select>
-                                        <select name="position" id="position">
-                                        	<option value="">직급</option>
                                             <option value="1">개발</option>
                                             <option value="2">운영</option>
                                             <option value="3">인사</option>
                                             <option value="9">대표</option>
                                         </select>
-                                        <input type="text" name="keyword" id="searchText" value="">
+                                        <select name="position" id="position">
+                                        	<option value="">직급</option>
+                                            <option value="1">인턴</option>
+                                            <option value="2">선임</option>
+                                            <option value="3">책임</option>
+                                            <option value="9">대표</option>
+                                        </select>
+                                        
+                                        <input type="text" name="keyword" id="keyword" value="">
                                         <button type="button" id="btnSearch">검색</button>
                                     </div>
                                 </td>
@@ -57,14 +58,18 @@
                         <col width="10%">
                         <col width="15%">
                         <col width="15%">
-                        <col width="35%">
-                        <col width="18%">
+                        <col width="15%">
+                        <col width="10%">
+                        <col width="20%">
+                        <col width="15%">
                     </colgroup>
                     <thead class="th_css">
                         <tr>
                             <th>번호</th>
                             <th>이름</th>
                             <th>아이디</th>
+                            <th>부서</th>
+                            <th>직급</th>
                             <th>휴대폰번호</th>
                             <th>주소</th>
                             <th>등록일</th>
@@ -73,7 +78,8 @@
                     <tbody class="tb_css" id="tbody">
                     </tbody>
                 </table>
-                <div id="paging">
+                <div id="paging" class="paging" style="text-align:center;">
+                	
                 </div>
 	    </div>
 	</article>

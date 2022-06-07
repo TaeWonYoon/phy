@@ -19,6 +19,7 @@ function list(currentPage) {
 	var searchType = $("#searchType").val();
 	var position = $("#position").val();
 	var department = $("#department").val();
+	var position = $("#position").val();
 	var keyword = $("#keyword").val();
 	var startDate = $("[name='startDate']").val();
 	var finishDate = $("[name='finishDate']").val();
@@ -28,6 +29,7 @@ function list(currentPage) {
 	 	pageSize : pageSize,
 	 	searchType : searchType,
 	 	department : department,
+	 	position : position,
 	 	keyword : keyword,
 	 	startDate : startDate,
 	 	finishDate : finishDate,
@@ -46,11 +48,15 @@ function listView(data,currentPage) {
 		tbody.html(text)
 	} else if(data.listCnt > 0) {
 		for(var i=0; i < data.list.length;i++) {
-			var idx = i+(currentPage*pageSize)+ 1 - pageSize;
-			var text = "<tr>"
+			var idx = (i+(currentPage*pageSize)- pageSize)+ 1;
+			log("data",data);
+			log("data.list[i].seq",data.list[i].seq);
+			var text = "<tr onclick='detail("+ data.list[i].seq + ")'>"
 					 + "<td>" + idx + "</td>"
 					 + "<td>" + data.list[i].name+ "</td>"
 					 + "<td>" + data.list[i].id+ "</td>"
+					 + "<td>" + statusVal(data.list[i].department,"0,1,2,3,9","무소속,개발,운영,인사,대표") + "</td>"
+					 + "<td>" + statusVal(data.list[i].position,"0,1,2,3,9","무소속,인턴,선임,책임,대표") + "</td>"
 					 + "<td>" + data.list[i].phone+ "</td>"
 					 + "<td>" + data.list[i].address+ "</td>"
 					 + "<td>" + dateFormatter(data.list[i].regDate)+ "</td>"
@@ -82,9 +88,15 @@ function listPaging(data,currentPage) {
 		pageFor = Math.floor(pageNum)+navCnt-1;
 	}
 	
+	
 	for(j;j <=pageFor; j++) {
 		if(j <= totalPage) {
-			var pages = "<td><a href='javascript:list(" + j + ")' >" + j + "</a></td>";
+			var pages = "";
+			if(currentPage == j) {
+				pages = "<span><a href='javascript:list(" + j + ")' class='on' >" + j + "</a></span>";
+			} else {
+				pages = "<span><a href='javascript:list(" + j + ")' >" + j + "</a></span>";
+			}
 			paging.append(pages);
 		}
 	}
@@ -92,15 +104,16 @@ function listPaging(data,currentPage) {
 	var next = Math.ceil(pageNum/navCnt) * navCnt; // 다음 페이지 체크
 	
 	if(next < totalPage) { //next
-		var pages = "<td><a href='javascript:pageN(" + pageNum + ","+ up +")'> &#62; </a></td>";
+		var pages = "<span><a href='javascript:pageN(" + pageNum + ","+ up +")'> &#62; </a></span>";
 		paging.append(pages);
 	}
 	
 	var prev = pageNum-navCnt; //이전페이지 체크
 	if(prev > 0) {
-		var pages = "<td><a href='javascript:pageN(" + pageNum + ","+ down +")'> &#60; </a></td>";
+		var pages = "<span><a href='javascript:pageN(" + pageNum + ","+ down +")'> &#60; </a></span>";
 		paging.prepend(pages);
 	}
+	
 	
 }
 
@@ -114,3 +127,7 @@ function pageN(num,chk) { //페이지 번호 계산 및 데이터 뿌림
 	list(pageNum);
 }
 
+function detail(seq) {
+	var url = "./userInfo";
+	window.open(url,'popup','scrollbars=yes,width=1000,height=600,top=100,left=200');
+}
