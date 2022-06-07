@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://taewonyoon.github.io/developerLib/script.js"></script>
 <style>
     .cont_top_wrap{overflow: hidden;height: 200px;border: 1px solid #eee;box-sizing: border-box;text-align: center;margin-bottom: 50px;}
     .cont_top_left{float: left;width: 50%;border-right: 1px solid #eee;box-sizing: border-box;height: 200px;padding-top: 50px;}
@@ -23,6 +24,7 @@
     .main_right textarea{width: 100%;resize: none;height: 300px;margin-bottom: 20px;}
     a.od_btn7{width: 50px;}
     a.od_btn6{width: 50px;}
+    .red {color:red;}
 </style>
 
 <div class="main_wrap">
@@ -41,11 +43,11 @@
                                 <tr>
                                     <td width="25%" class="font-b">아이디 / 이름</td>
                                     <td width="25%" class="font-b">
-                                        <input type="text"  id="userId" value="" class="mg_inp font-m" disabled>
+                                        <input type="text"  id="userId" value="${uvo.id}/${uvo.name}" class="mg_inp font-m" disabled>
                                     </td>
                                     <td width="25%" class="font-b">비밀번호</td>
                                     <td width="25%" class="font-b">
-                                        <input type="text" id="userPwd" value="" class="mg_inp font-m">
+                                        <input type="button" value="초기화" class="mg_inp font-m" id="pwdBtn"> 
                                     </td>
                                 </tr>
                                 <tr>
@@ -55,26 +57,23 @@
                                     </td>
                                     <td width="25%" class="font-b">휴대폰</td>
                                     <td width="25%" class="font-b">
-                                        <input type="text" id="userPhone" value="" class="mg_inp font-m">
+                                        <input type="text" id="userPhone" value="${uvo.phone}" class="mg_inp font-m">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="30%" class="font-b" rowspan="3">주소</td>
                                     <td width="70%" class="font-b" colspan="3">
+                                    	${uvo.address}
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td width="30%" class="font-b" rowspan="3"></td>
                                     <td width="70%" class="font-b" colspan="3">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="70%" class="font-b" colspan="3">
-                                        <%-- <input type="text" id="userDetailAddress" value="${userVO.userDetailAddress}" class="mg_inp font-m" disabled> --%>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="25%" class="font-b">회원가입일</td>
-                                    <td width="25%" class="font-b">
+                                    <td width="25%" class="font-b" id="regDate">
                                     </td>
                                 </tr>
                                 <tr>
@@ -92,15 +91,12 @@
                     </div>
                     <div class="main_right">
                          <a href="#" id="memoAdd" class="od_btn3 font-r">메모추가</a>
-                        <div id="memoList">
-                            <c:forEach items="" var="list">
-                                <p class="sub_tit font-b">메모</p>
-                                <div class="main_right_box">
-                                    <textarea style="width: 100%; height: 100px;" class="userMemo"></textarea>
-                                    <%--<a href="#!" class="od_btn3 font-r" name="">등록</a>--%>
-                                    <button type="button"class="od_btn3 font-r userMemoAdd">수정</button>
+                        <div class="memoList">
+                               <p class="sub_tit font-b">메모</p>
+                               <div class="main_right_box">
+                                   <textarea style="width: 100%; height: 100px;" class="userMemo">${uvo.memo}</textarea>
+                                   <button type="button"class="od_btn3 font-r" id="userMemoAdd">저장</button>
                                 </div>
-                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -109,14 +105,17 @@
                 <button type="submit" class="font-16 font-m color-fff po_confirm">확인</button>
                 <button type="button" onclick="self.close();"class="font-16 font-m color-fff po_confirm2">취소</button>
             </div-->
+            <input type="hidden" value="${uvo.seq}" id="useq"/>
+            <input type="hidden" value="${uvo.regDate}" id="bregDate"/>
         </form>
 
     </div>
 </div>
 <form id="formSub"></form>
 
+<script src="/resources/pageJs/admin/user/userInfo.js"></script>
 <script>
-
+	
 </script>
 </body>
 </html>

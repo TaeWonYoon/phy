@@ -17,6 +17,8 @@ public class UserVO {
 	private String pwd;
 	private String phone;
 	private String address;
+	private String email;
+	private String memo;
 	private int department;
 	private int position;
 	private int status;

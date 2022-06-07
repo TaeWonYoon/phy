@@ -56,4 +56,15 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return dao.userInfo(seq);
 	}
+	
+	@Override
+	public int pwdInit(Map<String, Object> map) {
+		return dao.pwdInit(map);
+	}
+	
+	@Override
+	public int memoAdd(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.memoAdd(map);
+	}
 }

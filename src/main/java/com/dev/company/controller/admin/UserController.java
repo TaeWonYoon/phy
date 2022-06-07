@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.server.ui.LoginPageGeneratingWebFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -107,7 +108,7 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/add.do", method = RequestMethod.POST)
-	public Map<String, Object> add(@RequestParam Map<String,Object> paramMap,HttpServletRequest request) {
+	public Map<String, Object> add(@RequestParam Map<String,Object> paramMap, HttpServletRequest request) {
 		paramMap.put("status", 1);
 		
 		//Bcript암호화
@@ -159,6 +160,7 @@ public class UserController {
 			}
 			logger.info("pwdMacth = " +pwdMacth);
 			if(pwdMacth) {
+				login.setPwd("");
 				session.setAttribute("admin", login); //회원정보 담기
 				IPVO ivo = new IPVO(); //로그
 				ivo.setIp(Ip.IpAddress(request));
@@ -181,10 +183,58 @@ public class UserController {
 		return resultMap;
 	}
 	
-	@RequestMapping(value = "/userInfo")
-	public String userInfo(@Param("seq") String seq) {
+	@RequestMapping(value = "/userInfo/{seq}")
+	public String userInfo(@PathVariable("seq") String seq, Model model) {
 		
-		service.userInfo(seq);
+		UserVO uvo = service.userInfo(seq);
+		model.addAttribute("uvo",uvo);
+		
 		return "/admin/user/userInfo";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/userInfo/pwd/{seq}")
+	public Map<String, Object> pwdInit(@PathVariable("seq") String seq) {
+		String result = "SUCCESS";
+		String resultMsg = "비밀번호 변경이 완료되었습니다";
+		Map<String,Object> paramMap = new HashMap<String, Object>();
+		String pwd = "a123456789"; //패스워드 초기화 값
+		String userpass = pwdEncoder.encode(pwd);
+		paramMap.put("seq", seq);
+		paramMap.put("userpass", userpass);
+		
+		int num = service.pwdInit(paramMap);
+		
+		if(num != 1) {
+			result = "FAIL";
+			resultMsg = "비밀번호 변경실패";
+		}
+		
+		Map<String,Object> resultMap = new HashMap<String, Object>();
+		
+		resultMap.put("result",result);
+		resultMap.put("resultMsg",resultMsg);
+		
+		return resultMap;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/userInfo/memoAdd")
+	public Map<String, Object> memoAdd(@RequestParam Map<String,Object> paramMap) {
+		String result = "SUCCESS";
+		String resultMsg = "메모등록이 완료되었습니다.";
+		
+		int num = service.memoAdd(paramMap);
+		if(num != 1) {
+			result = "FAIL";
+			resultMsg = "메모등록 실패";
+		}
+		
+		Map<String,Object> resultMap = new HashMap<String, Object>();
+		
+		resultMap.put("result",result);
+		resultMap.put("resultMsg",resultMsg);
+		
+		return resultMap;
 	}
 }

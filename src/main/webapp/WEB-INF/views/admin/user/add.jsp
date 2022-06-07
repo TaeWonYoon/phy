@@ -34,6 +34,12 @@
 					</td>
 				</tr>
 				<tr>
+					<td>이메일</td>
+					<td>
+						<input type="text" class="input_form" name="email">
+					</td>
+				</tr>
+				<tr>
 					<td>연락처</td>
 					<td>
 						<input type="text" class="input_form phoneNumber" name="phone" maxlength="13">
@@ -96,6 +102,7 @@ $("#add").click(function() {
 	if($('[name="adderss"]').emptyCheck('주소를')) return;
 	if($('[name="department"]').emptyCheck('부서를')) return;
 	if($('[name="position"]').emptyCheck('직급을')) return;
+	if($('[name="email"]').emptyCheck('이메일을')) return;
 	var callback = function(data) {
 		if(data.result == "SUCCESS") {
 			alert(data.resultMsg);

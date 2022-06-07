@@ -81,13 +81,13 @@ function listPaging(data,currentPage) {
 	
 	var j= pageNum == 1 ? 1 : pageNum; //포문에 기본값 설정
 	var pageFor = 0; //반복문처리 카운트
-
+	if(currentPage > totalPage)  currentPage = totalPage;
 	if(pageNum == 1) { //기본값
 		pageFor = navCnt; 
 	} else { //반복문 카운트 개수 처리
 		pageFor = Math.floor(pageNum)+navCnt-1;
 	}
-	
+	log("pageFor",pageFor)
 	
 	for(j;j <=pageFor; j++) {
 		if(j <= totalPage) {
@@ -102,18 +102,22 @@ function listPaging(data,currentPage) {
 	}
 	
 	var next = Math.ceil(pageNum/navCnt) * navCnt; // 다음 페이지 체크
-	
+	var finish = (Math.floor(totalPage/10)*10)+1; //마지막페이지
 	if(next < totalPage) { //next
 		var pages = "<span><a href='javascript:pageN(" + pageNum + ","+ up +")'> &#62; </a></span>";
 		paging.append(pages);
+		var finish = "<span><a href='javascript:pageF(" + totalPage + ","+ up +")'> &#62;&#62; </a></span>";
+		paging.append(finish);
 	}
 	
 	var prev = pageNum-navCnt; //이전페이지 체크
 	if(prev > 0) {
 		var pages = "<span><a href='javascript:pageN(" + pageNum + ","+ down +")'> &#60; </a></span>";
 		paging.prepend(pages);
+		var first = "<span><a href='javascript:pageF(" + 1 + ","+ down +")'> &#60;&#60; </a></span>"
+		paging.prepend(first);
 	}
-	
+	log("pageNum",pageNum)
 	
 }
 
@@ -127,7 +131,19 @@ function pageN(num,chk) { //페이지 번호 계산 및 데이터 뿌림
 	list(pageNum);
 }
 
-function detail(seq) {
-	var url = "./userInfo";
+function pageF(num,chk) { //첫번째와 마지막페이지
+	
+	if(chk == "up") {
+		pageNum = (Math.floor(num/10)*10)+1;; //마지막 페이지 시작번호 구하기
+	} 
+	if(chk =="down") {
+		pageNum = 1; //첫번째페이지
+	}
+	
+	list(num);
+}
+
+function detail(seq) { //상세 페이지
+	var url = "./userInfo/"+seq;
 	window.open(url,'popup','scrollbars=yes,width=1000,height=600,top=100,left=200');
 }

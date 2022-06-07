@@ -7,12 +7,12 @@
 	<insert id="userAdd" useGeneratedKeys="true" keyProperty="seq"> 
 		INSERT INTO tb_user
 			(
-				name, id, pwd, phone, adderss,
+				name, id, pwd, phone, adderss,email,
 			 	department, status, position, reg_date
 			) 
 		VALUES
 			(
-				#{name}, #{id}, #{pwd}, #{phone}, #{adderss},
+				#{name}, #{id}, #{pwd}, #{phone}, #{adderss}, #{email}
 			 	#{department}, #{status}, #{position}, now()
 			)
 	</insert>
@@ -20,7 +20,7 @@
 	<select id="userList" resultType="com.dev.company.vo.UserVO"  parameterType="map">
 		/*com.dev.company.mapper.admin.UserDAO.userList*/
 		SELECT 
-			seq, name, id, phone, address, 
+			seq, name, id, phone, address, email,
 			department, position, reg_date 
 		FROM 
 			tb_user
@@ -100,7 +100,10 @@
 	
 	<select id="login" resultType="com.dev.company.vo.UserVO">
 		/*com.dev.company.mapper.admin.UserDAO.login*/
-		SELECT * FROM 
+		SELECT 
+			seq, name, id, phone, address, email,
+			department, position, reg_date , pwd 
+		FROM 
 			tb_user
 		WHERE
 			id = #{id}
@@ -118,11 +121,38 @@
 	
 	<select id="userInfo" resultType="com.dev.company.vo.UserVO">
 		/*com.dev.company.mapper.admin.UserDAO.userInfo*/
-		SELECT * FROM 
+		SELECT 
+			seq, name, id, phone, address, email,
+			department, position, reg_date, memo  
+		FROM 
 			tb_user
 		WHERE
 			seq = #{seq}
 		LIMIT
 			0,1
 	</select>
+	
+	<update id="pwdInit">
+	/*com.dev.company.mapper.admin.UserDAO.pwdInit*/
+		UPDATE tb_user
+		SET 
+			pwd = #{userpass}
+		WHERE
+			seq = #{seq}
+		AND
+			status = '1'
+	</update>
+	
+	
+	<update id="memoAdd">
+	/*com.dev.company.mapper.admin.UserDAO.memoAdd*/
+		UPDATE tb_user
+		SET 
+			memo = #{memo}
+		WHERE
+			seq = #{seq}
+		AND
+			status = '1'
+	</update>
+	
 </mapper>

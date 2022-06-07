@@ -37,4 +37,11 @@ public interface UserDAO {
 	
 	//유저 상세
 	public UserVO userInfo(String seq);
+	
+	//패스워드 초기화
+	public int pwdInit(Map<String, Object> map);
+	
+	
+	//패스워드 초기화
+	public int memoAdd(Map<String, Object> map);
 }
